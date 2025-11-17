@@ -1,5 +1,0 @@
----
-title: "FPGA"
----
-
-## Block Diagram

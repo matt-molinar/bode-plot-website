@@ -1,5 +1,0 @@
----
-title: "Bode Plot Generator Resources"
----
-
-[E155 Course Website](https://hmc-e155.github.io)

@@ -1,5 +1,6 @@
 ---
 title: "About the Team"
 ---
+#### System Block Diagram
 
-## Acknowledgments
+![Figure 1](images/system_block.jpeg)(Figure 1: Block Diagram of primary systek components)

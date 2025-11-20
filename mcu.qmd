@@ -24,8 +24,8 @@ Figure 1 shows the physical layout of the design. The MCU was connected to our R
 
 #### Hardware
 
-We were able to plot the analog signal recevied by the MCU on a local host website using HTML. This plot represents an analog signal over a sweep of frequencies, which will be needed to make the bode plots.
+We were able to plot the analog signal recevied by the MCU on a local host website using HTML and the cancas API. This plot represents an analog signal over a sweep of frequencies, which will be needed to make the bode plots.
 
 ### Conclusion
 
-This design sucessfully used the ADC peripheral
+This design sucessfully used the ADC1 peripheral on the STM32 to poll data at a single input pin at a rate of about 1Mhz. The samples are initialized with a button press that will be changed to a fpga flag for a new frequency being output. 

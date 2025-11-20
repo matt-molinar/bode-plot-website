@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>MCU – Bode Plot Generator</title>
+<title>mcu – Bode Plot Generator</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -125,36 +125,65 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#schematic" id="toc-schematic" class="nav-link active" data-scroll-target="#schematic">Schematic</a></li>
+  <li><a href="#mcu" id="toc-mcu" class="nav-link active" data-scroll-target="#mcu">MCU</a>
+  <ul class="collapse">
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
+  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation:</a></li>
+  <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">MCU</h1>
-</div>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
-<div class="quarto-title-meta">
 
-    
-  
-    
-  </div>
-  
+<section id="mcu" class="level2">
+<h2 class="anchored" data-anchor-id="mcu">MCU</h2>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>The MCU is being used to read data directly after our device under test (DUT).</p>
+</section>
+<section id="design-and-testing-methodology" class="level3">
+<h3 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h3>
+<section id="design-methodology" class="level4">
+<h4 class="anchored" data-anchor-id="design-methodology">Design Methodology</h4>
+<p>This design uses the ADC peripheral in order to convert analog signals comming from our DUT into digital signals.</p>
+</section>
+<section id="testing-methodology" class="level4">
+<h4 class="anchored" data-anchor-id="testing-methodology">Testing Methodology</h4>
+<p>Testing this design was done via hardware verification. The</p>
+</section>
+</section>
+<section id="technical-documentation" class="level3">
+<h3 class="anchored" data-anchor-id="technical-documentation">Technical Documentation:</h3>
+<p>The source code for the project can be found in the associated <a href="https://github.com/GeorgeDavis26/bode-plot-generator/tree/main/mcu">GitHub repository</a>.</p>
+<section id="schematic" class="level4">
+<h4 class="anchored" data-anchor-id="schematic">Schematic</h4>
+<p><img src="images/BPG_schematic.jpeg" class="img-fluid" alt="Figure 1">(Figure 1: Schematic of physical layout)</p>
+<p>Figure 1 shows the physical layout of the design. The MCU was connected to our RX chain, which is used to condition the signal for being read by the MCU. Our RX chain ensure that the signal arrives at the appropriate voltage range (0 V - 3.3 V). It contains many unity gain buffers such that the impedance of one circuit doen’t affect others, allowing us to accuretly calculate the transfer function for plotting. Furthermore, the use of these op-amps helps limit the current such that the MCU recieves a current that it can tolerate.</p>
+</section>
+</section>
+<section id="results-and-discussion" class="level3">
+<h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
+<section id="hardware" class="level4">
+<h4 class="anchored" data-anchor-id="hardware">Hardware</h4>
+<p>We were able to plot the analog signal recevied by the MCU on a local host website using HTML and the canvas API. This plot represents an analog signal over a sweep of frequencies, which will be needed to make the bode plots.</p>
+<p><img src="images/new_freq.jpeg" class="img-fluid" alt="Figure 2">(Figure 2: HTML plot of two frequnecies with no filter)</p>
+<p><img src="images/same_freq_filter.jpeg" class="img-fluid" alt="Figure 3">(Figure 3: HTML plot of the same frequency with and without a filter)</p>
+<p><img src="images/filter.jpeg" class="img-fluid" alt="Figure 4">(Figure 4: HTML HTML plot of the increasing frequencies with a filter)</p>
+</section>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<p>This design sucessfully used the ADC1 peripheral on the STM32 to poll data at a single input pin at a rate of about 1Mhz. The samples are initialized with a button press that will be changed to a fpga flag for a new frequency being output.</p>
 
 
-</header>
-
-
-<section id="schematic" class="level2">
-<h2 class="anchored" data-anchor-id="schematic">Schematic</h2>
-
-
+</section>
 </section>
 
 </main> <!-- /main -->

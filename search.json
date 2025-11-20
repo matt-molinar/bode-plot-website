@@ -1,5 +1,40 @@
 [
   {
+    "objectID": "mcu.html",
+    "href": "mcu.html",
+    "title": "Bode Plot Generator",
+    "section": "",
+    "text": "The MCU is being used to read data directly after our device under test (DUT).\n\n\n\n\n\nThis design uses the ADC peripheral in order to convert analog signals comming from our DUT into digital signals.\n\n\n\nTesting this design was done via hardware verification. The\n\n\n\n\nThe source code for the project can be found in the associated GitHub repository.\n\n\n(Figure 1: Schematic of physical layout)\nFigure 1 shows the physical layout of the design. The MCU was connected to our RX chain, which is used to condition the signal for being read by the MCU. Our RX chain ensure that the signal arrives at the appropriate voltage range (0 V - 3.3 V). It contains many unity gain buffers such that the impedance of one circuit doen’t affect others, allowing us to accuretly calculate the transfer function for plotting. Furthermore, the use of these op-amps helps limit the current such that the MCU recieves a current that it can tolerate.\n\n\n\n\n\n\nWe were able to plot the analog signal recevied by the MCU on a local host website using HTML and the canvas API. This plot represents an analog signal over a sweep of frequencies, which will be needed to make the bode plots.\n(Figure 2: HTML plot of two frequnecies with no filter)\n(Figure 3: HTML plot of the same frequency with and without a filter)\n(Figure 4: HTML HTML plot of the increasing frequencies with a filter)\n\n\n\n\nThis design sucessfully used the ADC1 peripheral on the STM32 to poll data at a single input pin at a rate of about 1Mhz. The samples are initialized with a button press that will be changed to a fpga flag for a new frequency being output."
+  },
+  {
+    "objectID": "mcu.html#mcu",
+    "href": "mcu.html#mcu",
+    "title": "Bode Plot Generator",
+    "section": "",
+    "text": "The MCU is being used to read data directly after our device under test (DUT).\n\n\n\n\n\nThis design uses the ADC peripheral in order to convert analog signals comming from our DUT into digital signals.\n\n\n\nTesting this design was done via hardware verification. The\n\n\n\n\nThe source code for the project can be found in the associated GitHub repository.\n\n\n(Figure 1: Schematic of physical layout)\nFigure 1 shows the physical layout of the design. The MCU was connected to our RX chain, which is used to condition the signal for being read by the MCU. Our RX chain ensure that the signal arrives at the appropriate voltage range (0 V - 3.3 V). It contains many unity gain buffers such that the impedance of one circuit doen’t affect others, allowing us to accuretly calculate the transfer function for plotting. Furthermore, the use of these op-amps helps limit the current such that the MCU recieves a current that it can tolerate.\n\n\n\n\n\n\nWe were able to plot the analog signal recevied by the MCU on a local host website using HTML and the canvas API. This plot represents an analog signal over a sweep of frequencies, which will be needed to make the bode plots.\n(Figure 2: HTML plot of two frequnecies with no filter)\n(Figure 3: HTML plot of the same frequency with and without a filter)\n(Figure 4: HTML HTML plot of the increasing frequencies with a filter)\n\n\n\n\nThis design sucessfully used the ADC1 peripheral on the STM32 to poll data at a single input pin at a rate of about 1Mhz. The samples are initialized with a button press that will be changed to a fpga flag for a new frequency being output."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About the Team",
+    "section": "",
+    "text": "System Block Diagram\n(Figure 1: Block Diagram of primary systek components)"
+  },
+  {
+    "objectID": "fpga.html",
+    "href": "fpga.html",
+    "title": "Bode Plot Generator",
+    "section": "",
+    "text": "The iCE40 FPGA will generate a signal using an internally implemented Direct Digital Synthesizer (DDS). The FPGA will store a quarter-wave sine table in non volatile FLASHROM. The DDS will generate a waves at various frequencies to preform a “frequency sweep”, which will then drive a DAC to make an analog signal, which will be fed into the device under test (DUT).\n\n\n\n\n\nThis design implements a quarter-wave DDS. The quarter-wave represents one quadrant of values from a sine wave, which is stored in a LUT. This LUT is stored as ROM on the FPGA. Since there is only a quarter of the wave in the LUT, there is additional logic to construct the full sine wave depending on the current quadrant.\n\n\n\nTesting this design was done via simulation.\n\n\n\n\nThe source code for the project can be found in the associated GitHub repository.\n\n\n(Figure 1: Block Diagram of DDS)\nFigure 1 shows the block diagram of the DDS.\n\n\n\n\n\n\n(Figure 2: A screenshot of a simulation demonstrating that the DDS functions as expected.)\n(Figure 3: A screenshot of a simulation visualizing the DDS signal as an analog output.)\nThe design met the intended design objectives. Figure 2 shows that the DDS is able to create analog signals digitally. This is further proved bu Figure 3, which shows the digital signal output from the DDS visualized as an analog signal.\n\n\n\n\n\n\n\nThis design sucessfully implemented a quarter-wave DDS, which creates sine waves that will drive an external DAC."
+  },
+  {
+    "objectID": "fpga.html#fpga",
+    "href": "fpga.html#fpga",
+    "title": "Bode Plot Generator",
+    "section": "",
+    "text": "The iCE40 FPGA will generate a signal using an internally implemented Direct Digital Synthesizer (DDS). The FPGA will store a quarter-wave sine table in non volatile FLASHROM. The DDS will generate a waves at various frequencies to preform a “frequency sweep”, which will then drive a DAC to make an analog signal, which will be fed into the device under test (DUT).\n\n\n\n\n\nThis design implements a quarter-wave DDS. The quarter-wave represents one quadrant of values from a sine wave, which is stored in a LUT. This LUT is stored as ROM on the FPGA. Since there is only a quarter of the wave in the LUT, there is additional logic to construct the full sine wave depending on the current quadrant.\n\n\n\nTesting this design was done via simulation.\n\n\n\n\nThe source code for the project can be found in the associated GitHub repository.\n\n\n(Figure 1: Block Diagram of DDS)\nFigure 1 shows the block diagram of the DDS.\n\n\n\n\n\n\n(Figure 2: A screenshot of a simulation demonstrating that the DDS functions as expected.)\n(Figure 3: A screenshot of a simulation visualizing the DDS signal as an analog output.)\nThe design met the intended design objectives. Figure 2 shows that the DDS is able to create analog signals digitally. This is further proved bu Figure 3, which shows the digital signal output from the DDS visualized as an analog signal.\n\n\n\n\n\n\n\nThis design sucessfully implemented a quarter-wave DDS, which creates sine waves that will drive an external DAC."
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Bode Plot Generator",

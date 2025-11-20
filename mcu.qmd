@@ -1,5 +1,31 @@
----
-title: "MCU"
----
+## MCU
 
-## Schematic
+### Introduction
+The MCU is being used to read data directly after our device under test (DUT).
+
+### Design and Testing Methodology
+
+#### Design Methodology
+This design uses the ADC peripheral in order to convert analog signals comming from our DUT into digital signals. 
+
+#### Testing Methodology
+Testing this design was done via hardware verification. The 
+
+### Technical Documentation:
+The source code for the project can be found in the associated [GitHub repository](https://github.com/GeorgeDavis26/bode-plot-generator/tree/main/mcu).
+
+#### Schematic
+
+![Figure 1](images/BPG_schematic.png)(Figure 1: Schematic of physical layout)
+
+Figure 1 shows the physical layout of the design. The MCU was connected to our RX chain, which is used to condition the signal for being read by the MCU. Our RX chain ensure that the signal arrives at the appropriate voltage range (0 V - 3.3 V). It contains many unity gain buffers such that the impedance of one circuit doen't affect others, allowing us to accuretly calculate the transfer function for plotting. Furthermore, the use of these op-amps helps limit the current such that the MCU recieves a current that it can tolerate.
+
+### Results and Discussion
+
+#### Hardware
+
+We were able to plot the analog signal recevied by the MCU on a local host website using HTML. This plot represents an analog signal over a sweep of frequencies, which will be needed to make the bode plots.
+
+### Conclusion
+
+This design sucessfully used the ADC peripheral

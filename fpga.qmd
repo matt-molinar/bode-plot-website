@@ -1,5 +1,37 @@
----
-title: "FPGA"
----
+## FPGA
 
-## Block Diagram
+### Introduction
+The iCE40 FPGA will generate a signal using an internally implemented Direct Digital Synthesizer (DDS). The FPGA will store a quarter-wave sine table in non volatile FLASHROM. The DDS will generate a waves at various frequencies to preform a "frequency sweep", which will then drive a DAC to make an analog signal, which will be fed into the device under test (DUT).
+
+### Design and Testing Methodology
+
+#### Design Methodology
+This design implements a quarter-wave DDS. The quarter-wave represents one quadrant of values from a sine wave, which is stored in a LUT. This LUT is stored as ROM on the FPGA. Since there is only a quarter of the wave in the LUT, there is additional logic to construct the full sine wave depending on the current quadrant.
+
+#### Testing Methodology
+Testing this design was done via simulation.
+
+### Technical Documentation:
+The source code for the project can be found in the associated [GitHub repository](https://github.com/GeorgeDavis26/bode-plot-generator/tree/main/fpga).
+
+#### Block Diagram
+
+![Figure 1](images/dds_block_diagram.png)(Figure 1: Block Diagram of DDS)
+
+Figure 1 shows the block diagram of the DDS.
+
+### Results and Discussion
+
+#### Test Bench Simulation
+
+![Figure 2](images/dds.png)(Figure 2: A screenshot of a simulation demonstrating that the DDS functions as expected.)
+
+![Figure 3](images/dds_analog.png)(Figure 3: A screenshot of a simulation visualizing the DDS signal as an analog output.)
+
+The design met the intended design objectives. Figure 2 shows that the DDS is able to create analog signals digitally. This is further proved bu Figure 3, which shows the digital signal output from the DDS visualized as an analog signal.
+
+#### Hardware
+
+### Conclusion
+
+This design sucessfully implemented a quarter-wave DDS, which creates sine waves that will drive an external DAC.

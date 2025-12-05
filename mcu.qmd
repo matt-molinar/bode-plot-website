@@ -77,5 +77,4 @@ signal would trigger on the overflow of the counter value and the time differenc
 
 #### Data Visualization
 
-Once the gain and phase data had been acquired and converted to the correct units we converted them to strings using the sprintf function so they could be sent over a USART link to an ESP8266 wifi module. To plot the data itself we used the <canvas> API in HTML. This allowed us to create a log plotting function that would take the data and known frequency table and plot them on a log scale. 
- 
+Once the gain and phase data had been acquired and converted to the correct units we converted them to strings using the sprintf function so they could be sent over a USART link to an ESP8266 wifi module. To plot the data itself we used the canvas API in HTML. This allowed us to create a log plotting function that would take the data and known frequency table and plot them on a log scale. 

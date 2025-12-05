@@ -34,4 +34,4 @@ Finally, we were able to generate and display relatively accurate bode plots on 
 first order filter. The phase struggles to keep up at high frequencies and is prone to outliers. However as seen in Figure 4, when connected to the through or wire with zero load
 the phase is very close to zero. As frequency increases the variability or error increases as the period of the wave decreases giving the phase extraction algorithm less time to react and 
 sources of error such as propogation delay due to the instruction processing time impact the calculation more. Past 1 kHz the phase degrades to about 17% to 30% error on data points that are not
-outliers. Maye in the fuutre
+outliers.

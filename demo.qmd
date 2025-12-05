@@ -6,7 +6,7 @@
 
 ### Pictures
 
-![Figure 1: Generated Bode Plots for LPF](images/lpf_plot1.png){fig-cap="Generated Bode Plots for LPF"}
+![Figure 1: Generated Bode Plots for LPF](images/lpf_plot1.png)
 
 <br>
 

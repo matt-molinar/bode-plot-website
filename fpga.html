@@ -106,6 +106,14 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">MCU</span></a>
   </li>  
   <li class="nav-item">
+    <a class="nav-link" href="./system.html"> 
+<span class="menu-text">System Integration</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./demo.html"> 
+<span class="menu-text">Demo and Results</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
@@ -129,7 +137,6 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
   <li><a href="#design-and-testing-methodology" id="toc-design-and-testing-methodology" class="nav-link" data-scroll-target="#design-and-testing-methodology">Design and Testing Methodology</a></li>
-  <li><a href="#technical-documentation" id="toc-technical-documentation" class="nav-link" data-scroll-target="#technical-documentation">Technical Documentation:</a></li>
   <li><a href="#results-and-discussion" id="toc-results-and-discussion" class="nav-link" data-scroll-target="#results-and-discussion">Results and Discussion</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul></li>
@@ -146,43 +153,167 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="fpga">FPGA</h2>
 <section id="introduction" class="level3">
 <h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
-<p>The iCE40 FPGA will generate a signal using an internally implemented Direct Digital Synthesizer (DDS). The FPGA will store a quarter-wave sine table in non volatile FLASHROM. The DDS will generate a waves at various frequencies to preform a “frequency sweep”, which will then drive a DAC to make an analog signal, which will be fed into the device under test (DUT).</p>
+<p>The iCE40 FPGA generates a sine wave using an internally implemented Direct Digital Synthesizer (DDS). As a part of the DDS implementation, the FPGA stores a quarter-wave sine table in non volatile Flash Read Only Memory (ROM), which is a new feature we used for our FPGA. The DDS generates sine waves at various frequencies to preform a frequency sweep from (100 Hz to 100 kHz), which will then drive a DAC to make an analog signal.</p>
+<p>The Flash ROM was used as a way to store a sine wave LUT in non-volatile storage with immediate access. This feature goes beyond the previous material covered in the course because in the past we were concerned about optimizing a design for space by minimizing the number of LUT’s used. Thus, using the Flash ROM feature addresses this concern in a new way because it avoids storing data through the use of LUT’s. Ultimately, by using Flash ROM, we were able to keep a super light weight design by using only 5 % of the onboard LUT’s.</p>
 </section>
 <section id="design-and-testing-methodology" class="level3">
 <h3 class="anchored" data-anchor-id="design-and-testing-methodology">Design and Testing Methodology</h3>
 <section id="design-methodology" class="level4">
 <h4 class="anchored" data-anchor-id="design-methodology">Design Methodology</h4>
-<p>This design implements a quarter-wave DDS. The quarter-wave represents one quadrant of values from a sine wave, which is stored in a LUT. This LUT is stored as ROM on the FPGA. Since there is only a quarter of the wave in the LUT, there is additional logic to construct the full sine wave depending on the current quadrant.</p>
+<p>The FPGA is responsible for creating a frequency sweep that drives an external parallel 8-bit DAC. To do this, the FPGA generates a frequency sweep using a DDS. More specifically, we opted for a quarter-wave DDS, which only requires a fourth of a full sine wave table, in order to save on memory. This table was stored on the FPGA using its Flash ROM.</p>
+<p>The sweep control FSM (see figure 1) on the FPGA is responsible for generating a frequency sweep for our desired range (100 Hz to 100 kHz). The MCU controls this FSM by sending various flags to the FPGA, which lets it know when it should start a new process. To illustrate, the MCU lets the FPGA know when it’s ready to collect data for the current frequency and when its done collecting data, which serves as a flag for the FPGA to know when to start generating a wave at a specific frequency, and when to move on to the next wave.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/sweep_ctrl_fsm.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 1: FSM Diagram for the Sweep Controller</figcaption>
+</figure>
+</div>
+<p><br></p>
+<p>The second FSM present in the bode interface module is responsible for sending important information to the MCU via flags. The FPGA notifies the MCU when there is a zero crossing on its end, which amplitude attenuation mode it’s in, and when it is done sweeping frequencies.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/bode_interface_fsm.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 2: FSM Diagram for the Bode Interface</figcaption>
+</figure>
+</div>
+<p><br></p>
+<p>The source code for the FPGA can be found <a href="https://github.com/GeorgeDavis26/bode-plot-generator/tree/main/fpga">here</a>.</p>
 </section>
 <section id="testing-methodology" class="level4">
 <h4 class="anchored" data-anchor-id="testing-methodology">Testing Methodology</h4>
-<p>Testing this design was done via simulation.</p>
+<p>Testing for the FPGA was done by doing simulations for each individual submodule. Then, a testbench was created for the top module, which ensured that all modules interacted together accurately. Then, we verified that the design was actually behaving as we expected in physical hardware. Once we set up the interface with the external DAC, we watched the signal on an osccilloscope and made sure the sine waves were being generated at the correct frequency.</p>
 </section>
-</section>
-<section id="technical-documentation" class="level3">
-<h3 class="anchored" data-anchor-id="technical-documentation">Technical Documentation:</h3>
-<p>The source code for the project can be found in the associated <a href="https://github.com/GeorgeDavis26/bode-plot-generator/tree/main/fpga">GitHub repository</a>.</p>
-<section id="block-diagram" class="level4">
-<h4 class="anchored" data-anchor-id="block-diagram">Block Diagram</h4>
-<p><img src="images/dds_block_diagram.png" class="img-fluid" alt="Figure 1">(Figure 1: Block Diagram of DDS)</p>
-<p>Figure 1 shows the block diagram of the DDS.</p>
+<section id="pinout" class="level4">
+<h4 class="anchored" data-anchor-id="pinout">Pinout</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>FPGA</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>P19</td>
+<td>MCO (clk)</td>
+</tr>
+<tr class="even">
+<td>P20</td>
+<td>FULL_WAVE_OUT</td>
+</tr>
+<tr class="odd">
+<td>P11</td>
+<td>MCU_READY</td>
+</tr>
+<tr class="even">
+<td>P10</td>
+<td>SWEEP_DONE</td>
+</tr>
+<tr class="odd">
+<td>P12</td>
+<td>HALF_WAVE_OUT</td>
+</tr>
+<tr class="even">
+<td>P18</td>
+<td>INIT_BODE</td>
+</tr>
+<tr class="odd">
+<td>P27</td>
+<td>ZERO_CROSS</td>
+</tr>
+<tr class="even">
+<td>P13</td>
+<td>MCU_DONE</td>
+</tr>
+<tr class="odd">
+<td>P9</td>
+<td>System Reset</td>
+</tr>
+<tr class="even">
+<td>P3</td>
+<td>DAC_DATA0</td>
+</tr>
+<tr class="odd">
+<td>P45</td>
+<td>DAC_DATA1</td>
+</tr>
+<tr class="even">
+<td>P46</td>
+<td>DAC_DATA2</td>
+</tr>
+<tr class="odd">
+<td>P6</td>
+<td>DAC_DATA3</td>
+</tr>
+<tr class="even">
+<td>P4</td>
+<td>DAC_DATA4</td>
+</tr>
+<tr class="odd">
+<td>P48</td>
+<td>DAC_DATA5</td>
+</tr>
+<tr class="even">
+<td>P47</td>
+<td>DAC_DATA6</td>
+</tr>
+<tr class="odd">
+<td>P2</td>
+<td>DAC_DATA7</td>
+</tr>
+<tr class="even">
+<td>P44</td>
+<td>DAC_WR</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="results-and-discussion" class="level3">
 <h3 class="anchored" data-anchor-id="results-and-discussion">Results and Discussion</h3>
 <section id="test-bench-simulation" class="level4">
 <h4 class="anchored" data-anchor-id="test-bench-simulation">Test Bench Simulation</h4>
-<p><img src="images/dds.png" class="img-fluid" alt="Figure 2">(Figure 2: A screenshot of a simulation demonstrating that the DDS functions as expected.)</p>
-<p><img src="images/dds_analog.png" class="img-fluid" alt="Figure 3">(Figure 3: A screenshot of a simulation visualizing the DDS signal as an analog output.)</p>
-<p>The design met the intended design objectives. Figure 2 shows that the DDS is able to create analog signals digitally. This is further proved bu Figure 3, which shows the digital signal output from the DDS visualized as an analog signal.</p>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/bode_top2.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 3: Waveforms from top module simulation</figcaption>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/sweep_controller.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 4: Waveforms from sweep controller simulation</figcaption>
+</figure>
+</div>
+<p><br></p>
+<p>The design met the intended design objectives. Figure 3 shows that the FPGA is able to generate input data for the DAC and communicate with the MCU via the exchange of various flags. Figure 4, shows that the FPGA can generate a frequency sweep of sine waves. Here, the digital signal output from the DDS visualized as an analog signal.</p>
+<p>Simulation / waveform images of our testbenches passing can be found <a href="https://github.com/GeorgeDavis26/bode-plot-generator/tree/main/fpga/sim_images">here</a>.</p>
 </section>
 <section id="hardware" class="level4">
 <h4 class="anchored" data-anchor-id="hardware">Hardware</h4>
+<p>To test this design with hardware we used a logic analyzer and an oscillscope. Using these instruments allowed us to verify that flags from the FPGA were being raised at the right time. It also allowed us to verify that the sine waves being generated had the correct frequency. In Figure 6, we can see the digital signals (D0 - D7) that were driving the DAC. Additionally, D9 shows the FPGA tracking falling edge zero crossings. This flag is being sent to the MCU to let it know when it sees zero crossing on its end.</p>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/sweep_ctrl_oscope.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 5: Oscilloscope trace of frequency sweep</figcaption>
+</figure>
+</div>
+<p><br></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/bpg_LA.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 6: Logic Analyzer displaying digital signals overlayed with the analog signal</figcaption>
+</figure>
+</div>
+<p><br></p>
 </section>
 </section>
 <section id="conclusion" class="level3">
 <h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
-<p>This design sucessfully implemented a quarter-wave DDS, which creates sine waves that will drive an external DAC.</p>
+<p>This design sucessfully implemented a quarter-wave DDS, which creates sine waves at multiple frequencies that will drive an external DAC. It also used handsahke logic via flags to communicate with the MCU to ensure that state transitions were timed accordingly. As apart of its communication with the MCU, the FPGA sent flags to let the MCU know when a zero crossing was detected, what amplitdue state it was in, and when the frequency sweep was done.</p>
 
 
 </section>

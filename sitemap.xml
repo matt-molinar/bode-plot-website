@@ -2,22 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://matt-molinar.github.io/bode-plot-website/mcu.html</loc>
-    <lastmod>2025-11-20T23:08:06.958Z</lastmod>
+    <lastmod>2025-12-05T19:59:08.998Z</lastmod>
   </url>
   <url>
     <loc>https://matt-molinar.github.io/bode-plot-website/about.html</loc>
-    <lastmod>2025-11-20T22:55:11.696Z</lastmod>
+    <lastmod>2025-12-05T19:38:43.561Z</lastmod>
   </url>
   <url>
     <loc>https://matt-molinar.github.io/bode-plot-website/fpga.html</loc>
-    <lastmod>2025-11-20T22:50:57.173Z</lastmod>
+    <lastmod>2025-12-05T19:12:11.053Z</lastmod>
+  </url>
+  <url>
+    <loc>https://matt-molinar.github.io/bode-plot-website/system.html</loc>
+    <lastmod>2025-12-05T19:23:25.143Z</lastmod>
+  </url>
+  <url>
+    <loc>https://matt-molinar.github.io/bode-plot-website/demo.html</loc>
+    <lastmod>2025-12-05T19:58:25.297Z</lastmod>
   </url>
   <url>
     <loc>https://matt-molinar.github.io/bode-plot-website/index.html</loc>
-    <lastmod>2025-11-20T22:50:57.183Z</lastmod>
+    <lastmod>2025-12-05T17:59:21.286Z</lastmod>
   </url>
   <url>
     <loc>https://matt-molinar.github.io/bode-plot-website/resources.html</loc>
-    <lastmod>2025-11-20T22:50:57.183Z</lastmod>
+    <lastmod>2025-12-05T18:29:32.234Z</lastmod>
   </url>
 </urlset>

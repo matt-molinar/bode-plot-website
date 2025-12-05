@@ -261,12 +261,10 @@ window.Quarto = {
 <p>The FPGA sent TX zero crossing flags at every rising edge however, the signal was inverted through a necessary inverting op amp with a gain &lt;1 meaning the zero crossing would land on Rising edges. To detect these we implemented a GPIO EXTI interrupt that would trip and sample the timer counter value. To detect RX zero crossings we implemented a simple analog watchdog algorithm to watch the continuously polling ADC for a threshold value. Once a specified number of zero crossings had been detected, the interrupt was disabled and the phase difference between the zero crossings was calculated. We ran into many issues with this section as we could never sample the same zero crossing due to the interrupt handler’s run time crowding the RX zero crossing at high frequencies. Our algorithm instead continuously wrapped the phase to be in the 180 to -180 range accounting for the zero crossings existing on different periods of the carrier wave. It was determined experimentally that the optimal number of zero crossings to sample was 2. Any more and the 100Hz signal would trigger on the overflow of the counter value and the time difference would be difficult to extract.</p>
 <section id="data-visualization" class="level4">
 <h4 class="anchored" data-anchor-id="data-visualization">Data Visualization</h4>
-Once the gain and phase data had been acquired and converted to the correct units we converted them to strings using the sprintf function so they could be sent over a USART link to an ESP8266 wifi module. To plot the data itself we used the
-<canvas>
-<p>API in HTML. This allowed us to create a log plotting function that would take the data and known frequency table and plot them on a log scale.</p>
+<p>Once the gain and phase data had been acquired and converted to the correct units we converted them to strings using the sprintf function so they could be sent over a USART link to an ESP8266 wifi module. To plot the data itself we used the canvas API in HTML. This allowed us to create a log plotting function that would take the data and known frequency table and plot them on a log scale.</p>
 
 
-</canvas></section>
+</section>
 </section>
 </section>
 

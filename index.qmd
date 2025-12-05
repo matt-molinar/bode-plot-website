@@ -1,6 +1,6 @@
 ---
 title: "Bode Plot Generator"
-image: images/image.png
+image: images/bpg_LA.png
 about:
   template: jolla
   links:

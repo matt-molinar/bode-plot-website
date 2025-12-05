@@ -13,6 +13,10 @@ website:
         text: FPGA
       - href: mcu.qmd
         text: MCU
+      - href: system.qmd
+        text: System Integration
+      - href: demo.qmd
+        text: Demo and Results
       - href: about.qmd
         text: About
 

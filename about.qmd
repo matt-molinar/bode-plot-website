@@ -2,4 +2,24 @@
 title: "About the Team"
 ---
 
+## Team
+
+### George Davis
+
+George Davis is a Senior Engineering student at Harvey Mudd College from Seattle, Washington. He is interested in electrical design including analog, RF, and digital circuits. In his free time, George loves to play the drums, go on hikes, and spend time with his friends in anyway possible. His interest in engineering started with robotics but now with what he has learned at HMC he has the skills to apply himself to many different subjects!
+
+[GitHub](https://github.com/GeorgeDavis26)
+
+[LinkedIn](https://www.linkedin.com/in/gswdavis/)
+
+### Matthew Molinar
+
+Matthew Molinar is a Sernior Engineering student at Harvey Mudd College. His interests are in the field of electrical engineering, with a particular focus on RF and digital signal processing. In his free time, Matthew loves to play basketball, spend time with friends, and look for new music to listen to.
+
+[GitHub](https://github.com/mmolinar1)
+
+[LinkedIn](https://www.linkedin.com/in/matthew-molinar/)
+
 ## Acknowledgments
+
+We would like to give a big thanks to Prof. Spencer for helping us think through the implementation of this project. We'd also like to thank all the course grutors and our peers for their support.

@@ -14,7 +14,10 @@ The analog data is read off of an ADC pin continuously polling values at 12 bits
 Figure 1 displays the sequence of operations on a given MCU reset or bode plot DAQ protocol and display. 
 First a configuration sequence is run, enabling necessary peripherals, GPIO pins, clock, and and flash. 
 For this project we chose to run the PLL through the SYSCLK at 80MHz to achieve optimal instruction execution time 
-as we had a few key timing aspects of this project. The GPIO pins fall into two main categories; input and output pins 
+as we had a few key timing aspects of this project. 
+
+
+The GPIO pins fall into two main categories; input and output pins 
 for the communication link between the MCU and FPGA and the ADC analog input. The input pin function and detailed outline 
 can be found in the System section. The pinouts for the MCU pins can be found in Figure 2 below.
 
@@ -33,9 +36,13 @@ can be found in the System section. The pinouts for the MCU pins can be found in
 
 All pins except PA2 and PB3 fall into the communication link category of pins. The MCU drives the FPGA at a reduced clock rate of 
 10MHz through the MCO pin which is the largest possible frequency that our bread board wiring could support without coupling and degradation of the wave. 
+
+
 MCU_READY and MCU_DONE were GPIO outputs that told the FPGA that the MCU had either finished initialization or finished the ADC conversions and extraction of phase and gain.
 ZERO_CROSS was an active high flag used to send RX zero crossing timings from the FPGA to the MCU. INIT_BODE, SWEEP_DONE, FULLWAVE, and HALF WAVE are used for initialization 
 and starting and stopping the frequency sweep. GPIO_ADC operates depending on the state of the other pins and polls data from the ADC peripheral at a high rate. 
+
+
 The new MCU feature that we used for this project was the ADC peripheral on the STM32L432KC. While the E155 labs covered peripherals such as timers and SPI we did not talk 
 about or work with the ADC peripheral. This peripheral allows special function GPIO pins to be routed to the inputs of the ADC and convert analog voltages to digital bits.
 We chose to implement the peripheral in single conversion mode that, when toggled, could sample the incoming sine wave at a high enough frequency as to abide by the Nyquist Theorem.
@@ -66,10 +73,13 @@ The phase extraction process was similar but had more detailed DAQ parameters du
 In order to extract the phase TX and RX falling edge zero crossings were detected and compared in time. To track time we had a simple general 
 purpose timer free running, when a falling edge was detected at either TX or RX the counter value was sampled. 
 
+
 The FPGA sent TX zero crossing flags at every rising edge however, the signal was inverted through a necessary inverting op amp with a gain 
 <1 meaning the zero crossing would land on Rising edges. To detect these we implemented a GPIO EXTI interrupt that would trip and sample the 
 timer counter value. To detect RX zero crossings we implemented a simple analog watchdog algorithm to watch the continuously polling ADC for a threshold value.
 Once a specified number of zero crossings had been detected, the interrupt was disabled and the phase difference between the zero crossings was calculated. 
+
+
 We ran into many issues with this section as we could never sample the same zero crossing due to the interrupt handler’s run time crowding
 the RX zero crossing at high frequencies. Our algorithm instead continuously wrapped the phase to be in the 180 to -180 range accounting for the
 zero crossings existing on different periods of the carrier wave. It was determined experimentally that the optimal number of zero crossings to sample was 2. Any more and the 100Hz
